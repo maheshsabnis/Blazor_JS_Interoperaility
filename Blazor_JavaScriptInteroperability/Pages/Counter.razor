@@ -1,0 +1,53 @@
+﻿@page "/counter"
+@inject IJSRuntime JS
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<hr />
+<button class="btn btn-success" @onclick="Display">Call JS Funciton</button>
+<hr />
+<button class="btn btn-success" @onclick="Add">Call JS Funciton for Add</button>
+<hr />
+<button class="btn btn-success" @onclick="GetData">Call JS Funciton for Promise</button>
+<hr />
+<div>
+	<strong>
+		The Result is @res
+	</strong>
+</div>
+<hr />
+<div>
+	<strong>
+		Data Received from the service: ><br /> @data
+	</strong>
+</div>
+
+@code {
+	private int currentCount = 0;
+	private int res = 0;
+
+	private string data = "";
+
+	private void IncrementCount()
+	{
+		currentCount++;
+	}
+
+	private async Task Display()
+	{
+		await JS.InvokeVoidAsync("display");
+	}
+
+	private async Task Add()
+	{
+		res = await JS.InvokeAsync<int>("doWork", 10, 20);
+	}
+
+	private async Task GetData()
+	{
+		data = await JS.InvokeAsync<string>("getData");
+	}
+
+}

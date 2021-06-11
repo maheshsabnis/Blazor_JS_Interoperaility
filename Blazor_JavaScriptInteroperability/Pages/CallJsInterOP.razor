@@ -1,0 +1,68 @@
+﻿@page "/calljsusingclass"
+@using Blazor_JavaScriptInteroperability.Services
+@inject IJSRuntime jsInterop
+<h3>Calling JS in C# using C# Class</h3>
+
+<table class="table table-bordered table-striped">
+	<tr>
+		<td>
+			<input type="button" value="Print" class="btn btn-warning"
+				   @onclick="obj.Print" />
+		</td>
+		<td>
+			<input type="button" value="Add" class="btn btn-dark"
+				   @onclick="obj.Add" />
+		</td>
+		<td>
+			<input type="button" value="Get Data" class="btn btn-dark"
+				   @onclick="obj.GetData" />
+		</td>
+	</tr>
+</table>
+<hr />
+<div>
+	<strong>
+		The Result of 'add()' method is @obj.res
+	</strong>
+</div>
+<hr />
+<div>
+	 
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>Product Row Id</th>
+				<th>Product Id</th>
+				<th>Product Name</th>
+				<th>Category Name</th>
+				<th>Manufacturer</th>
+				<th>Description</th>
+				<th>Base Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var product in obj.products)
+			{
+			<tr>
+				<td>@product.ProductRowId</td>
+				<td>@product.ProductId</td>
+				<td>@product.ProductName</td>
+				<td>@product.CategoryName</td>
+				<td>@product.Manufacturer</td>
+				<td>@product.Description</td>
+				<td>@product.BasePrice</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+@code {
+	private CallJavaScript obj;
+
+	protected override void OnInitialized()
+	{
+		obj = new CallJavaScript(jsInterop);
+		base.OnInitialized();
+	}
+}
